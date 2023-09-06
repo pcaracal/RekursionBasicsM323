@@ -23,6 +23,7 @@
     static void Main(String[] args) {
       // EinMalEinsFor();
       Console.WriteLine(EinMalEinsOuterRecursive(15, 15));
+      
     }
   }
 }
