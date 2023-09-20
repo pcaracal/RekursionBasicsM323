@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 
 namespace RekursionBasicsM323 {
-  class Program {
+  public static class Program {
     static void EinMalEinsFor() {
       for (int i = 1; i <= 10; i++) {
         for (int y = 1; y <= 10; y++) {
@@ -136,16 +136,87 @@ namespace RekursionBasicsM323 {
       CalculatePrimesToNRecursive(n, y - 1, isPrime);
     }
 
+    // Pascal triangle double for loop
+    static List<List<int>> PascalFor(int h) {
+      List<List<int>> pascal = new List<List<int>>();
+      for (int i = 0; i < h; i++) {
+        List<int> row = new List<int>();
+        for (int y = 0; y <= i; y++) {
+          if (y == 0 || y == i) row.Add(1);
+          else row.Add(pascal[i - 1][y - 1] + pascal[i - 1][y]);
+        }
+
+        pascal.Add(row);
+      }
+
+      return pascal;
+    }
+
+    // Pascal triangle double recursion
+    static List<List<int>> PascalRecursive(int h, int i, int y, List<List<int>> pascal) {
+      if (i == h) return pascal;
+      if (y == i + 1) {
+        List<int> row = new List<int>();
+        for (int x = 0; x <= i; x++) {
+          if (x == 0 || x == i) row.Add(1);
+          else row.Add(pascal[i - 1][x - 1] + pascal[i - 1][x]);
+        }
+
+        pascal.Add(row);
+        return PascalRecursive(h, i + 1, 0, pascal);
+      }
+
+      return PascalRecursive(h, i, y + 1, pascal);
+    }
+
+    static void Print2dIntList(List<List<int>> ls) {
+      Console.Write("[");
+      foreach (List<int> i in ls) {
+        Console.Write("[");
+        foreach (int y in i) {
+          Console.Write($"{y}, ");
+        }
+
+        Console.WriteLine("\b\b], ");
+      }
+
+      Console.WriteLine("\b\b]");
+    }
+
+    static void SimpleDoubleForLoop(int n, int m) {
+      for (int i = 0; i < n; i++) {
+        for (int y = 0; y < m; y++) {
+          Console.WriteLine($"{i} - {y}");
+        }
+      }
+    }
+
+    static void SimpleDoubleRecursion(int n, int m, int nmax, int mmax) {
+      if (n == nmax) return;
+      if (m == mmax) {
+        SimpleDoubleRecursion(n + 1, 0, nmax, mmax);
+        return;
+      }
+
+      Console.WriteLine($"{n} + {m}");
+      SimpleDoubleRecursion(n, m + 1, nmax, mmax);
+    }
+
 
     static void Main(String[] args) {
       // Console.WriteLine(Ackermann(3, 4));
       // EinMalEinsRecursive(10, 10, 1, 1);
       // DrawPatternFor(10);
       // DrawPatternFullRecursive(1, 1, 10);
-      int n = 150;
+      // int n = 150;
       // CalculatePrimesToNFor(n);
-      Console.WriteLine();
-      CalculatePrimesToNRecursive(n, n - 1, true);
+      // Console.WriteLine();
+      // CalculatePrimesToNRecursive(n, n - 1, true);
+      // Print2dIntList(PascalFor(10));
+      // Print2dIntList(PascalRecursive(25, 0, 0, new List<List<int>>()));
+
+      // SimpleDoubleForLoop(5, 5);
+      SimpleDoubleRecursion(0, 0, 5, 5);
     }
   }
 }
